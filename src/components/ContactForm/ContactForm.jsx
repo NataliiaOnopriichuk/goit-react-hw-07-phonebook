@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
-import { addContact } from 'redux/cotactsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/contacts/operation.contacts';
 
 export const ContactForm = memo(() => {
   const dispatch = useDispatch();
@@ -12,14 +12,14 @@ export const ContactForm = memo(() => {
   const addContacts = event => {
     event.preventDefault();
     const name = event.target.elements.name.value;
-    const number = event.target.elements.number.value;
+    const phone = event.target.elements.number.value;
     if (
-      stateContacts.contacts.some(
+      stateContacts.items.some(
         el => el.name.toLowerCase().trim() === name.toLowerCase().trim()
       )
     )
       return alert(`${name} is already in contacts`);
-    dispatch(addContact({ name, number, id: nanoid() }));
+    dispatch(addContact({ name, phone }));
     event.target.reset();
   };
 
