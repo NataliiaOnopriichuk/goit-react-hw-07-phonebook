@@ -1,18 +1,17 @@
 import { ContactItem } from '../ContactItem/ContactItem';
 import css from './ContactList.module.css';
 import { useSelector } from 'react-redux';
-import { getContacts, getFilter } from 'redux/selectors';
+import { getFilter } from 'redux/selectors';
 import { useMemo } from 'react';
 
-export const ContactList = () => {
-  const stateContacts = useSelector(getContacts);
+export const ContactList = ({ contacts }) => {
   const filterContacts = useSelector(getFilter);
 
   const filterContactsByName = useMemo(() => {
-    return stateContacts.items.filter(({ name }) =>
+    return contacts.filter(({ name }) =>
       name.toLowerCase().includes(filterContacts.toLowerCase().trim())
     );
-  }, [stateContacts.items, filterContacts]);
+  }, [contacts, filterContacts]);
 
   return (
     <ul className={css.list}>

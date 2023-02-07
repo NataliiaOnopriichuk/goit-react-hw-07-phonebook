@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts } from 'redux/contacts/operation.contacts';
-import { getFilter } from 'redux/selectors';
+import { getContacts, getFilter } from 'redux/selectors';
 import { ContactForm } from '../ContactForm/ContactForm';
 import { ContactList } from '../ContactList/ContactList';
 import { Filter } from '../Filter/Filter';
@@ -9,10 +9,13 @@ import { Filter } from '../Filter/Filter';
 export const App = () => {
   const dispatch = useDispatch();
   const search = useSelector(getFilter);
-  console.log('search', search);
+  const { items, isLoading, error } = useSelector(getContacts);
+
   useEffect(() => {
     dispatch(fetchContacts(search));
   }, [dispatch, search]);
+
+  if (error) return <p>Download error</p>;
 
   return (
     <div
@@ -30,7 +33,7 @@ export const App = () => {
 
       <h2>Contacts</h2>
       <Filter />
-      <ContactList />
+      {isLoading ? <p>Loader...</p> : <ContactList contacts={items} />}
     </div>
   );
 };
