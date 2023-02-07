@@ -1,12 +1,12 @@
 import { memo } from 'react';
 import css from './ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { selectorContacts } from 'redux/selectors';
 import { addContact } from 'redux/contacts/operation.contacts';
 
 export const ContactForm = memo(() => {
   const dispatch = useDispatch();
-  const stateContacts = useSelector(getContacts);
+  const stateContacts = useSelector(selectorContacts);
 
   const addContacts = event => {
     event.preventDefault();
